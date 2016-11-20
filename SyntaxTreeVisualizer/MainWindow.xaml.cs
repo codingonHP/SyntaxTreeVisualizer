@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace SyntaxTreeVisualizer
 {
@@ -20,9 +9,34 @@ namespace SyntaxTreeVisualizer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly CodeParser.Parser _roslyn;
         public MainWindow()
         {
             InitializeComponent();
+            _roslyn = new CodeParser.Parser();
         }
+
+        private void BtnOpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string sourceCode = File.ReadAllText(openFileDialog.FileName);
+                RefreshCodeTree(sourceCode);
+            }
+
+        }
+
+        private void RefreshCodeTree(string sourceCode)
+        {
+            SourceCodeTree.Items.Clear();
+            _roslyn.ReachedAtNodeEvent += node =>
+            {
+                SourceCodeTree.Items.Add(node.Node);
+            };
+
+            _roslyn.FillCodeTree(sourceCode);
+        }
+
     }
 }

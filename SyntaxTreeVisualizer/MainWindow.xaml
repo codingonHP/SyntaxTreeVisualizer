@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SyntaxTreeVisualizer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Syntax Tree Visualizer" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Name="SourceCodeTreeViewContainer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button x:Name="BtnOpenFile" 
+                    IsDefault="True" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Click="BtnOpenFile_Click"> Open C# File</Button>
+            
+            <TreeView Grid.Row="1" Name="SourceCodeTree"></TreeView>
+        </Grid>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="2" Name="SourceCodeViewerContainer">
+
+        </Grid>
     </Grid>
 </Window>
