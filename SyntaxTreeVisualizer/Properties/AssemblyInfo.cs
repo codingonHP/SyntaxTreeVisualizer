@@ -8,11 +8,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SyntaxTreeVisualizer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Open C# file and it will generate Syntax Tree for the same.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EMC Corporation")]
 [assembly: AssemblyProduct("SyntaxTreeVisualizer")]
-[assembly: AssemblyCopyright("Copyright © EMC Corporation 2016")]
+[assembly: AssemblyCopyright("None")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
