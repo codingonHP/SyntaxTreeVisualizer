@@ -27,7 +27,7 @@
         </Grid>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Name="SourceCodeViewerContainer">
-
+            <Label Name="sourceCodePreview"></Label>
         </Grid>
     </Grid>
 </Window>
