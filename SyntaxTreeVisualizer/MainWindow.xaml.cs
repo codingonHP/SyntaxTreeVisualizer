@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -29,29 +30,40 @@ namespace SyntaxTreeVisualizer
             };
 
             if (openFileDialog.ShowDialog() == true)
-            {
                 try
                 {
-                    string sourceCode = File.ReadAllText(openFileDialog.FileName);
-                    RefreshCodeTree(sourceCode);
-                    RefreshCodePreview(sourceCode);
+                    Task.Factory.StartNew(() =>
+                    {
+                        string sourceCode = File.ReadAllText(openFileDialog.FileName);
+                        RefreshCodeTree(sourceCode);
+                        RefreshCodePreview(sourceCode);
+                    });
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(exception.StackTrace, "Unable to parse the file", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                    MessageBox.Show(exception.StackTrace,
+                                    "Unable to parse the file",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error, MessageBoxResult.OK);
                 }
-            }
         }
 
-        private void RefreshCodePreview(string sourceCode)
+        private async void RefreshCodePreview(string sourceCode)
         {
-            sourceCodePreview.Content = _parser.FormatSourceCode(sourceCode);
+            await Dispatcher.InvokeAsync(() =>
+            {
+                SourceCodePreview.Text = _parser.FormatSourceCode(sourceCode);
+            });
+
         }
 
-        private void RefreshCodeTree(string sourceCode)
+        private async void RefreshCodeTree(string sourceCode)
         {
-            SourceCodeTree.Items.Clear();
-            _parser.FillCodeTree(sourceCode, SourceCodeTree);
+            await Dispatcher.InvokeAsync(() =>
+            {
+                SourceCodeTree.Items.Clear();
+                _parser.FillCodeTree(sourceCode, SourceCodeTree);
+            });
         }
 
     }
